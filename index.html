@@ -1,0 +1,1610 @@
+<!DOCTYPE html>
+<!-- =========================================================================
+     ПРОЕКТ: САЙТ КОНДИТЕРСКОЙ GALINA CAKE
+     ВЕРСИЯ: 3.0 (Финальная версия с модальным окном без формы оплаты)
+     ДАТА СОЗДАНИЯ: 2026 ГОД
+     АВТОР: GALINA CAKE
+     ========================================================================= -->
+<html lang="ru">
+<head>
+    <!-- =====================================================================
+         БЛОК 1: МЕТАДАННЫЕ И БАЗОВЫЕ НАСТРОЙКИ ДОКУМЕНТА
+         ===================================================================== -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Кондитерская Galina cake - изысканные торты на заказ">
+    <meta name="keywords" content="торты, кондитерская, заказать торт, десерты, сладости, галина кейк">
+    <meta name="author" content="Galina cake">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Заголовок страницы, отображаемый во вкладке браузера -->
+    <title>Galina cake — изысканные торты на заказ</title>
+    
+    <!-- =====================================================================
+         БЛОК 2: ПОДКЛЮЧЕНИЕ ВНЕШНИХ ШРИФТОВ
+         ===================================================================== -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+    <!-- =====================================================================
+         БЛОК 3: ВСТРОЕННЫЕ КАСКАДНЫЕ ТАБЛИЦЫ СТИЛЕЙ (CSS)
+         ===================================================================== -->
+    <style>
+        /* -----------------------------------------------------------------
+           РАЗДЕЛ 3.1: ГЛОБАЛЬНЫЕ CSS-ПЕРЕМЕННЫЕ (ЦВЕТА, ШРИФТЫ, ОТСТУПЫ)
+           ----------------------------------------------------------------- */
+        :root {
+            /* Основные цвета интерфейса */
+            --color-bg-main: #fcf9f9;
+            --color-bg-card: #ffffff;
+            --color-primary: #d46a85;
+            --color-primary-hover: #b5526b;
+            --color-primary-light: #fdf0f3;
+            --color-text-dark: #332b2d;
+            --color-text-muted: #8b7a7d;
+            --color-border: #f2e3e6;
+            
+            /* Семейства шрифтов */
+            --font-heading: 'Playfair Display', serif;
+            --font-body: 'Montserrat', sans-serif;
+            
+            /* Тени для карточек и кнопок */
+            --shadow-sm: 0 4px 12px rgba(212, 106, 133, 0.05);
+            --shadow-md: 0 10px 30px rgba(212, 106, 133, 0.1);
+            --shadow-lg: 0 20px 40px rgba(212, 106, 133, 0.15);
+            
+            /* Скругления углов */
+            --radius-sm: 8px;
+            --radius-md: 16px;
+            --radius-lg: 24px;
+            
+            /* Универсальная анимация перехода */
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        /* -----------------------------------------------------------------
+           РАЗДЕЛ 3.2: СБРОС СТИЛЕЙ БРАУЗЕРА (RESET)
+           ----------------------------------------------------------------- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* -----------------------------------------------------------------
+           РАЗДЕЛ 3.3: БАЗОВЫЕ СТИЛИ ДЛЯ СТРАНИЦЫ
+           ----------------------------------------------------------------- */
+        body {
+            font-family: var(--font-body);
+            color: var(--color-text-dark);
+            line-height: 1.6;
+            background-color: var(--color-bg-main);
+            
+            /* Создание мягкого градиентного фона */
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(253, 240, 243, 0.8) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(253, 240, 243, 0.8) 0%, transparent 40%);
+            background-attachment: fixed;
+            
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Основной контейнер растягивается на все доступное пространство */
+        main {
+            flex: 1;
+        }
+
+        /* -----------------------------------------------------------------
+           РАЗДЕЛ 3.4: СТИЛИ ШАПКИ САЙТА (HEADER)
+           ----------------------------------------------------------------- */
+        header {
+            position: sticky;
+            top: 0;
+            
+            /* Эффект "матового стекла" */
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            
+            border-bottom: 1px solid rgba(242, 227, 230, 0.8);
+            padding: 16px 48px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 50;
+            transition: var(--transition);
+        }
+
+        /* Логотип / Название бренда */
+        .brand {
+            font-family: var(--font-heading);
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--color-primary);
+            letter-spacing: 1px;
+            cursor: default;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .brand::after {
+            content: "✦";
+            font-size: 16px;
+            color: #f3c2d0;
+        }
+
+        /* Правая часть шапки (меню + корзина) */
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+
+        /* Навигационное меню */
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        nav a {
+            font-family: var(--font-body);
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--color-text-muted);
+            text-decoration: none;
+            cursor: pointer;
+            padding: 10px 16px;
+            border-radius: var(--radius-sm);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        /* Анимированное подчеркивание в меню */
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 4px;
+            left: 50%;
+            transform: translateX(-50%) scaleX(0);
+            width: 20px;
+            height: 2px;
+            background-color: var(--color-primary);
+            transition: var(--transition);
+            border-radius: 2px;
+        }
+
+        nav a:hover {
+            color: var(--color-primary);
+        }
+
+        nav a.active {
+            color: var(--color-primary);
+            font-weight: 600;
+        }
+
+        nav a.active::after {
+            transform: translateX(-50%) scaleX(1);
+        }
+
+        /* Круглая кнопка корзины */
+        .cart-btn {
+            background: #ffffff;
+            border: 1px solid var(--color-border);
+            border-radius: 50%;
+            width: 52px;
+            height: 52px;
+            cursor: pointer;
+            position: relative;
+            color: var(--color-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .cart-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--color-primary-light);
+        }
+
+        .cart-btn svg {
+            width: 24px;
+            height: 24px;
+            fill: currentColor;
+            transition: var(--transition);
+        }
+
+        .cart-btn:hover svg {
+            transform: scale(1.1);
+        }
+
+        /* Счетчик товаров на иконке корзины */
+        .cart-count {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            background: linear-gradient(135deg, var(--color-primary), #b5526b);
+            color: #ffffff;
+            font-family: var(--font-body);
+            font-size: 11px;
+            font-weight: 700;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #ffffff;
+            box-shadow: 0 2px 8px rgba(212, 106, 133, 0.3);
+        }
+
+        /* -----------------------------------------------------------------
+           РАЗДЕЛ 3.5: ВСПЛЫВАЮЩИЕ УВЕДОМЛЕНИЯ (TOAST)
+           ----------------------------------------------------------------- */
+        .toast {
+            position: fixed;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%) translateY(30px);
+            background: var(--color-text-dark);
+            color: #ffffff;
+            font-family: var(--font-body);
+            font-size: 14px;
+            font-weight: 500;
+            padding: 16px 32px;
+            border-radius: 50px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            z-index: 9999;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .toast::before {
+            content: "✓";
+            color: #90ee90;
+            font-weight: bold;
+        }
+
+        .toast.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* -----------------------------------------------------------------
+           РАЗДЕЛ 3.6: ОБЩИЕ СТИЛИ ДЛЯ СТРАНИЦ (SPA ПЕРЕКЛЮЧЕНИЕ)
+           ----------------------------------------------------------------- */
+        .page {
+            display: none;
+            animation: slideUpFade 0.5s ease forwards;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes slideUpFade {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .container {
+            padding: 60px 48px 100px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Заголовки секций */
+        .section-head {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-head h2 {
+            font-family: var(--font-heading);
+            font-size: 42px;
+            font-weight: 600;
+            color: var(--color-text-dark);
+            letter-spacing: 1px;
+            margin-bottom: 16px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-head h2::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--color-primary), transparent);
+        }
+
+        /* -----------------------------------------------------------------
+           РАЗДЕЛ 3.7: СЕТКА И КАРТОЧКИ ТОРТОВ
+           ----------------------------------------------------------------- */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+        }
+
+        .card {
+            background: var(--color-bg-card);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-lg);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            transition: var(--transition);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--color-primary-light);
+        }
+
+        /* Блок с изображением */
+        .card-img {
+            position: relative;
+            height: 280px;
+            background: linear-gradient(135deg, #fdf0f3, #f7d6df);
+            overflow: hidden;
+        }
+
+        .card-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        .card:hover .card-img img {
+            transform: scale(1.06);
+        }
+
+        /* Заглушка, если фото не загрузилось */
+        .card-img .placeholder {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #d98aa0;
+            font-family: var(--font-body);
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            background: linear-gradient(135deg, #fdf0f3, #f7d6df);
+            z-index: 1;
+            gap: 10px;
+        }
+
+        .card-img .placeholder::before {
+            content: "📷";
+            font-size: 32px;
+            opacity: 0.5;
+        }
+
+        .card-img img.loaded + .placeholder {
+            display: none;
+        }
+
+        /* Контентная часть карточки */
+        .card-body {
+            padding: 32px;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .card-body h3 {
+            font-family: var(--font-heading);
+            font-size: 26px;
+            font-weight: 600;
+            color: var(--color-text-dark);
+            margin-bottom: 12px;
+        }
+
+        .card-body p {
+            font-family: var(--font-body);
+            font-size: 14px;
+            color: var(--color-text-muted);
+            flex: 1;
+            margin-bottom: 28px;
+            line-height: 1.7;
+        }
+
+        /* Подвал карточки (цена + количество + кнопка) */
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px dashed var(--color-border);
+            padding-top: 24px;
+            gap: 16px;
+        }
+
+        .price {
+            font-family: var(--font-body);
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--color-primary);
+            white-space: nowrap;
+        }
+
+        /* Контроллер количества товара */
+        .qty-control {
+            display: flex;
+            align-items: center;
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+            background: #fafafa;
+        }
+
+        .qty-btn {
+            background: transparent;
+            border: none;
+            width: 36px;
+            height: 40px;
+            cursor: pointer;
+            color: var(--color-text-dark);
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .qty-btn:hover {
+            background: var(--color-primary-light);
+            color: var(--color-primary);
+        }
+
+        .qty-input {
+            width: 40px;
+            height: 40px;
+            border: none;
+            text-align: center;
+            font-family: var(--font-body);
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--color-text-dark);
+            background: transparent;
+            -moz-appearance: textfield;
+        }
+
+        .qty-input::-webkit-outer-spin-button,
+        .qty-input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        /* -----------------------------------------------------------------
+           РАЗДЕЛ 3.8: СТИЛИ КНОПОК
+           ----------------------------------------------------------------- */
+        .btn {
+            background: linear-gradient(135deg, #df849b, #b5526b);
+            border: none;
+            color: #ffffff;
+            font-family: var(--font-body);
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            padding: 14px 24px;
+            cursor: pointer;
+            border-radius: var(--radius-sm);
+            transition: var(--transition);
+            box-shadow: 0 4px 15px rgba(181, 82, 107, 0.3);
+            text-transform: uppercase;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(181, 82, 107, 0.4);
+        }
+
+        .btn:active {
+            transform: translateY(1px);
+            box-shadow: 0 2px 10px rgba(181, 82, 107, 0.3);
+        }
+
+        /* -----------------------------------------------------------------
+           РАЗДЕЛ 3.9: СТРАНИЦЫ "О НАС" И "КОНТАКТЫ"
+           ----------------------------------------------------------------- */
+        .about-content,
+        .contacts-content {
+            max-width: 800px;
+            margin: 0 auto;
+            font-family: var(--font-body);
+            font-size: 16px;
+            color: var(--color-text-muted);
+            background: var(--color-bg-card);
+            padding: 60px;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--color-border);
+            box-shadow: var(--shadow-md);
+            line-height: 1.8;
+        }
+
+        .about-content {
+            text-align: center;
+        }
+
+        .about-content p {
+            margin-bottom: 24px;
+        }
+
+        .about-content h3 {
+            font-family: var(--font-heading);
+            font-size: 32px;
+            color: var(--color-text-dark);
+            margin-bottom: 24px;
+        }
+
+        .contacts-content {
+            max-width: 600px;
+        }
+
+        .contact-item {
+            display: flex;
+            margin-bottom: 24px;
+            font-size: 16px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .contact-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .contact-item strong {
+            width: 160px;
+            color: var(--color-primary);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .contact-item span {
+            color: var(--color-text-dark);
+            font-weight: 500;
+        }
+
+        /* -----------------------------------------------------------------
+           РАЗДЕЛ 3.10: КОРЗИНА (БОКОВАЯ ПАНЕЛЬ)
+           ----------------------------------------------------------------- */
+        .cart-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(51, 43, 45, 0.4);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            z-index: 100;
+        }
+
+        .cart-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .cart-panel {
+            position: fixed;
+            top: 0;
+            right: -520px;
+            width: 520px;
+            max-width: 100%;
+            height: 100vh;
+            background: var(--color-bg-card);
+            box-shadow: -20px 0 60px rgba(0, 0, 0, 0.1);
+            transition: right 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+            z-index: 101;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cart-panel.active {
+            right: 0;
+        }
+
+        .cart-header {
+            padding: 28px 32px;
+            border-bottom: 1px solid var(--color-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #ffffff;
+            flex-shrink: 0;
+        }
+
+        .cart-header h3 {
+            font-family: var(--font-heading);
+            font-size: 28px;
+            color: var(--color-text-dark);
+            font-weight: 600;
+        }
+
+        .close-cart {
+            background: var(--color-primary-light);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: var(--color-primary);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .close-cart:hover {
+            background: #f7d6df;
+            transform: rotate(90deg);
+        }
+
+        .cart-items {
+            flex: 1;
+            overflow-y: auto;
+            padding: 24px 32px;
+            background: #fafafa;
+        }
+
+        .cart-empty {
+            text-align: center;
+            color: var(--color-text-muted);
+            margin-top: 60px;
+            font-size: 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .cart-empty::before {
+            content: "🛒";
+            font-size: 48px;
+            opacity: 0.3;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .cart-item-info h4 {
+            font-family: var(--font-body);
+            font-size: 16px;
+            color: var(--color-text-dark);
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .cart-item-info span {
+            font-family: var(--font-body);
+            font-size: 14px;
+            color: var(--color-text-muted);
+        }
+
+        .remove-item {
+            background: #ffffff;
+            border: 1px solid var(--color-border);
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-text-muted);
+            cursor: pointer;
+            font-size: 20px;
+            transition: var(--transition);
+        }
+
+        .remove-item:hover {
+            background: #feeceb;
+            color: #d9534f;
+            border-color: #f9d1cf;
+        }
+
+        .cart-footer {
+            padding: 28px 32px;
+            border-top: 1px solid var(--color-border);
+            background: #ffffff;
+            flex-shrink: 0;
+        }
+
+        .cart-total {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: var(--font-body);
+            font-size: 18px;
+            color: var(--color-text-dark);
+            margin-bottom: 24px;
+            font-weight: 500;
+        }
+
+        .cart-total span:last-child {
+            font-family: var(--font-heading);
+            color: var(--color-primary);
+            font-size: 32px;
+            font-weight: 700;
+        }
+
+        .checkout-btn {
+            width: 100%;
+            padding: 18px;
+            font-size: 16px;
+        }
+
+        /* -----------------------------------------------------------------
+           РАЗДЕЛ 3.11: МОДАЛЬНОЕ ОКНО (ВЫЛЕТАЮЩАЯ ТАБЛИЧКА)
+           ----------------------------------------------------------------- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(51, 43, 45, 0.6);
+            backdrop-filter: blur(8px);
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: #ffffff;
+            padding: 48px 40px;
+            border-radius: var(--radius-lg);
+            max-width: 420px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.2);
+            transform: translateY(30px) scale(0.95);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: translateY(0) scale(1);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: var(--color-primary-light);
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            font-size: 24px;
+            color: var(--color-primary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .modal-close:hover {
+            background: #f7d6df;
+            transform: rotate(90deg);
+        }
+
+        .modal-icon {
+            font-size: 56px;
+            margin-bottom: 24px;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .modal-content h3 {
+            font-family: var(--font-heading);
+            font-size: 28px;
+            color: var(--color-text-dark);
+            margin-bottom: 12px;
+        }
+
+        .modal-content p {
+            font-family: var(--font-body);
+            font-size: 15px;
+            color: var(--color-text-muted);
+            margin-bottom: 24px;
+            line-height: 1.6;
+        }
+
+        .modal-phone {
+            display: block;
+            font-family: var(--font-heading);
+            font-size: 26px;
+            font-weight: 700;
+            color: var(--color-primary);
+            text-decoration: none;
+            padding: 16px;
+            background: var(--color-primary-light);
+            border-radius: var(--radius-md);
+            margin-bottom: 24px;
+            transition: var(--transition);
+        }
+
+        .modal-phone:hover {
+            background: #f7d6df;
+            transform: scale(1.02);
+        }
+
+        .modal-phone small {
+            display: block;
+            font-family: var(--font-body);
+            font-size: 12px;
+            color: var(--color-text-muted);
+            font-weight: 400;
+            margin-top: 4px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* -----------------------------------------------------------------
+           РАЗДЕЛ 3.12: ПОДВАЛ (FOOTER)
+           ----------------------------------------------------------------- */
+        footer {
+            background: #ffffff;
+            border-top: 1px solid var(--color-border);
+            padding: 40px 48px;
+            text-align: center;
+            font-family: var(--font-body);
+            font-size: 14px;
+            color: var(--color-text-muted);
+            margin-top: auto;
+        }
+
+        /* -----------------------------------------------------------------
+           РАЗДЕЛ 3.13: АДАПТИВНАЯ ВЕРСТКА (МОБИЛЬНЫЕ УСТРОЙСТВА)
+           ----------------------------------------------------------------- */
+        @media (max-width: 992px) {
+            .grid {
+                gap: 24px;
+            }
+            
+            .cart-panel {
+                width: 460px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 16px 20px;
+                flex-wrap: wrap;
+                gap: 16px;
+            }
+
+            .header-right {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            nav {
+                order: 3;
+                width: 100%;
+                justify-content: center;
+                background: #ffffff;
+                border-radius: var(--radius-sm);
+                padding: 8px;
+                box-shadow: var(--shadow-sm);
+            }
+
+            nav a {
+                padding: 8px 12px;
+                font-size: 13px;
+            }
+
+            .container {
+                padding: 40px 20px 80px;
+            }
+
+            .section-head h2 {
+                font-size: 32px;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .card-footer {
+                flex-wrap: wrap;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+            .about-content,
+            .contacts-content {
+                padding: 32px 24px;
+            }
+
+            .contact-item {
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .cart-panel {
+                width: 100%;
+                right: -100%;
+            }
+
+            .modal-content {
+                padding: 32px 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- =====================================================================
+         БЛОК 4: ШАПКА САЙТА
+         ===================================================================== -->
+    <header>
+        <div class="brand">
+            Galina cake
+        </div>
+        
+        <div class="header-right">
+            <nav>
+                <a onclick="showPage('cakes', this)" class="active">
+                    Торты
+                </a>
+                <a onclick="showPage('about', this)">
+                    О нас
+                </a>
+                <a onclick="showPage('contacts', this)">
+                    Контакты
+                </a>
+            </nav>
+            
+            <button class="cart-btn" onclick="toggleCart()">
+                <svg viewBox="0 0 24 24">
+                    <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/>
+                </svg>
+                <span class="cart-count" id="cartCount">0</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- =====================================================================
+         БЛОК 5: ОСНОВНОЙ КОНТЕНТ САЙТА
+         ===================================================================== -->
+    <main>
+        
+        <!-- -----------------------------------------------------------------
+             СЕКЦИЯ 5.1: ВИТРИНА ТОРТОВ
+             ----------------------------------------------------------------- -->
+        <section id="cakes" class="page active">
+            <div class="container">
+                <div class="section-head">
+                    <h2>Наши десерты</h2>
+                </div>
+                
+                <div class="grid">
+                    
+                    <!-- Карточка 1 -->
+                    <article class="card">
+                        <div class="card-img">
+                            <img src="images/praga.jpg" alt="Торт Прага" onload="this.classList.add('loaded')">
+                            <div class="placeholder">Фото скоро</div>
+                        </div>
+                        <div class="card-body">
+                            <h3>«Прага»</h3>
+                            <p>Классический шоколадный торт с нежным кремом на сгущённом молоке и вишнёвой ноткой.</p>
+                            <div class="card-footer">
+                                <span class="price">1 890 ₽</span>
+                                <div class="qty-control">
+                                    <button class="qty-btn" onclick="changeQty(1, -1)">−</button>
+                                    <input type="number" class="qty-input" id="qty-1" value="1" min="1" max="10" readonly>
+                                    <button class="qty-btn" onclick="changeQty(1, 1)">+</button>
+                                </div>
+                                <button class="btn" onclick="addToCart(1)">Выбрать</button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Карточка 2 -->
+                    <article class="card">
+                        <div class="card-img">
+                            <img src="images/medovik.jpg" alt="Медовик" onload="this.classList.add('loaded')">
+                            <div class="placeholder">Фото скоро</div>
+                        </div>
+                        <div class="card-body">
+                            <h3>Медовик</h3>
+                            <p>Тончайшие медовые коржи, пропитанные домашним сметанным кремом с грецким орехом.</p>
+                            <div class="card-footer">
+                                <span class="price">1 650 ₽</span>
+                                <div class="qty-control">
+                                    <button class="qty-btn" onclick="changeQty(2, -1)">−</button>
+                                    <input type="number" class="qty-input" id="qty-2" value="1" min="1" max="10" readonly>
+                                    <button class="qty-btn" onclick="changeQty(2, 1)">+</button>
+                                </div>
+                                <button class="btn" onclick="addToCart(2)">Выбрать</button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Карточка 3 -->
+                    <article class="card">
+                        <div class="card-img">
+                            <img src="images/red-velvet.jpg" alt="Красный бархат" onload="this.classList.add('loaded')">
+                            <div class="placeholder">Фото скоро</div>
+                        </div>
+                        <div class="card-body">
+                            <h3>Красный бархат</h3>
+                            <p>Бархатистые коржи насыщенного цвета с какао и нежнейшим сливочным чиз-кремом.</p>
+                            <div class="card-footer">
+                                <span class="price">2 100 ₽</span>
+                                <div class="qty-control">
+                                    <button class="qty-btn" onclick="changeQty(3, -1)">−</button>
+                                    <input type="number" class="qty-input" id="qty-3" value="1" min="1" max="10" readonly>
+                                    <button class="qty-btn" onclick="changeQty(3, 1)">+</button>
+                                </div>
+                                <button class="btn" onclick="addToCart(3)">Выбрать</button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Карточка 4 -->
+                    <article class="card">
+                        <div class="card-img">
+                            <img src="images/cheesecake.jpg" alt="Клубничный чизкейк" onload="this.classList.add('loaded')">
+                            <div class="placeholder">Фото скоро</div>
+                        </div>
+                        <div class="card-body">
+                            <h3>Клубничный чизкейк</h3>
+                            <p>Песочная основа, нежный сливочный сыр и свежая ароматная клубника.</p>
+                            <div class="card-footer">
+                                <span class="price">1 980 ₽</span>
+                                <div class="qty-control">
+                                    <button class="qty-btn" onclick="changeQty(4, -1)">−</button>
+                                    <input type="number" class="qty-input" id="qty-4" value="1" min="1" max="10" readonly>
+                                    <button class="qty-btn" onclick="changeQty(4, 1)">+</button>
+                                </div>
+                                <button class="btn" onclick="addToCart(4)">Выбрать</button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Карточка 5 -->
+                    <article class="card">
+                        <div class="card-img">
+                            <img src="images/napoleon.jpg" alt="Наполеон" onload="this.classList.add('loaded')">
+                            <div class="placeholder">Фото скоро</div>
+                        </div>
+                        <div class="card-body">
+                            <h3>Наполеон</h3>
+                            <p>Хрустящие слои и нежнейший заварной крем по секретному домашнему рецепту.</p>
+                            <div class="card-footer">
+                                <span class="price">1 750 ₽</span>
+                                <div class="qty-control">
+                                    <button class="qty-btn" onclick="changeQty(5, -1)">−</button>
+                                    <input type="number" class="qty-input" id="qty-5" value="1" min="1" max="10" readonly>
+                                    <button class="qty-btn" onclick="changeQty(5, 1)">+</button>
+                                </div>
+                                <button class="btn" onclick="addToCart(5)">Выбрать</button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Карточка 6 -->
+                    <article class="card">
+                        <div class="card-img">
+                            <img src="images/tart.jpg" alt="Лимонный тарт" onload="this.classList.add('loaded')">
+                            <div class="placeholder">Фото скоро</div>
+                        </div>
+                        <div class="card-body">
+                            <h3>Лимонный тарт</h3>
+                            <p>Песочная основа, освежающий лимонный курд и воздушное облачко меренги.</p>
+                            <div class="card-footer">
+                                <span class="price">1 820 ₽</span>
+                                <div class="qty-control">
+                                    <button class="qty-btn" onclick="changeQty(6, -1)">−</button>
+                                    <input type="number" class="qty-input" id="qty-6" value="1" min="1" max="10" readonly>
+                                    <button class="qty-btn" onclick="changeQty(6, 1)">+</button>
+                                </div>
+                                <button class="btn" onclick="addToCart(6)">Выбрать</button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Карточка 7 -->
+                    <article class="card">
+                        <div class="card-img">
+                            <img src="images/truffle.jpg" alt="Трюфельный с малиной" onload="this.classList.add('loaded')">
+                            <div class="placeholder">Фото скоро</div>
+                        </div>
+                        <div class="card-body">
+                            <h3>Трюфельный с малиной</h3>
+                            <p>Глубокий вкус тёмного шоколада, трюфельный крем и яркое малиновое конфи.</p>
+                            <div class="card-footer">
+                                <span class="price">2 350 ₽</span>
+                                <div class="qty-control">
+                                    <button class="qty-btn" onclick="changeQty(7, -1)">−</button>
+                                    <input type="number" class="qty-input" id="qty-7" value="1" min="1" max="10" readonly>
+                                    <button class="qty-btn" onclick="changeQty(7, 1)">+</button>
+                                </div>
+                                <button class="btn" onclick="addToCart(7)">Выбрать</button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Карточка 8 -->
+                    <article class="card">
+                        <div class="card-img">
+                            <img src="images/vanilla.jpg" alt="Ванильный с ягодами" onload="this.classList.add('loaded')">
+                            <div class="placeholder">Фото скоро</div>
+                        </div>
+                        <div class="card-body">
+                            <h3>Ванильный с ягодами</h3>
+                            <p>Нежный ванильный бисквит, сливочный крем и ассорти свежих сезонных ягод.</p>
+                            <div class="card-footer">
+                                <span class="price">1 900 ₽</span>
+                                <div class="qty-control">
+                                    <button class="qty-btn" onclick="changeQty(8, -1)">−</button>
+                                    <input type="number" class="qty-input" id="qty-8" value="1" min="1" max="10" readonly>
+                                    <button class="qty-btn" onclick="changeQty(8, 1)">+</button>
+                                </div>
+                                <button class="btn" onclick="addToCart(8)">Выбрать</button>
+                            </div>
+                        </div>
+                    </article>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- -----------------------------------------------------------------
+             СЕКЦИЯ 5.2: О НАС
+             ----------------------------------------------------------------- -->
+        <section id="about" class="page">
+            <div class="container">
+                <div class="section-head">
+                    <h2>О кондитерской</h2>
+                </div>
+                
+                <div class="about-content">
+                    <h3>Искусство в каждой детали</h3>
+                    <p>
+                        Мы — небольшая семейная кондитерская, которая печёт торты с любовью и вниманием к каждой детали. 
+                        Наш путь начался с простых домашних рецептов, которые бережно передавались из поколения в поколение.
+                    </p>
+                    <p>
+                        Мы используем только свежие ягоды, натуральные сливки и проверенные временем ингредиенты. 
+                        Никаких искусственных красителей и консервантов — только чистая и искренняя любовь к кондитерскому искусству.
+                    </p>
+                    <p>
+                        Наша главная цель — чтобы каждый кусочек нашего торта дарил вам радость, 
+                        создавал праздничное настроение и оставлял самое приятное послевкусие.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- -----------------------------------------------------------------
+             СЕКЦИЯ 5.3: КОНТАКТЫ
+             ----------------------------------------------------------------- -->
+        <section id="contacts" class="page">
+            <div class="container">
+                <div class="section-head">
+                    <h2>Связаться с нами</h2>
+                </div>
+                
+                <div class="contacts-content">
+                    <div class="contact-item">
+                        <strong>📞 Телефон:</strong>
+                        <span>+7 909 667 29 39</span>
+                    </div>
+                    <div class="contact-item">
+                        <strong>✉️ Email:</strong>
+                        <span>hello@galinacake.ru</span>
+                    </div>
+                    <div class="contact-item">
+                        <strong>📍 Адрес:</strong>
+                        <span>Нара фоминск </span>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+    </main>
+
+    <!-- =====================================================================
+         БЛОК 6: ПОДВАЛ САЙТА
+         ===================================================================== -->
+    <footer>
+        © 2026 Galina cake — торты на заказ. Сделано с любовью.
+    </footer>
+
+    <!-- =====================================================================
+         БЛОК 7: РАЗМЕТКА КОРЗИНЫ
+         ===================================================================== -->
+    <div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+    
+    <aside class="cart-panel" id="cartPanel">
+        <div class="cart-header">
+            <h3>Ваш заказ</h3>
+            <button class="close-cart" onclick="toggleCart()">&times;</button>
+        </div>
+        
+        <div class="cart-items" id="cartItems">
+            <!-- Сюда JavaScript будет динамически вставлять добавленные товары -->
+        </div>
+        
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>К оплате:</span>
+                <span id="cartTotal">0 ₽</span>
+            </div>
+            <button class="btn checkout-btn" onclick="submitOrder()">Оформить заказ</button>
+        </div>
+    </aside>
+
+    <!-- =====================================================================
+         БЛОК 8: МОДАЛЬНОЕ ОКНО (ВЫЛЕТАЮЩАЯ ТАБЛИЧКА)
+         ===================================================================== -->
+    <!-- Номер телефона обновлен на +7 909 667 29 39 -->
+    <div class="modal-overlay" id="orderModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">&times;</button>
+            <div class="modal-icon">📞</div>
+            
+            <h3>Заказ принят!</h3>
+            
+            <p>Спасибо за ваш выбор.</p>
+            
+            <p style="margin-bottom: 8px; font-size: 13px;">Или позвоните нам сами прямо сейчас:</p>
+            
+            <a href="tel:+79096672939" class="modal-phone">
+                +7 909 667 29 39
+                <small>Нажмите, чтобы позвонить</small>
+            </a>
+
+            <button class="btn" onclick="closeModal()" style="width: 100%; padding: 16px;">Отлично</button>
+        </div>
+    </div>
+
+    <!-- =====================================================================
+         БЛОК 9: ВСПЛЫВАЮЩЕЕ УВЕДОМЛЕНИЕ (TOAST)
+         ===================================================================== -->
+    <div class="toast" id="toast">Готово</div>
+
+    <!-- =====================================================================
+         БЛОК 10: ПРОГРАММНЫЙ КОД JAVASCRIPT
+         ===================================================================== -->
+    <script>
+        /* -----------------------------------------------------------------
+           РАЗДЕЛ 10.1: БАЗА ДАННЫХ ТОВАРОВ (МАССИВ ОБЪЕКТОВ)
+           ----------------------------------------------------------------- */
+        const cakes = [
+            {
+                id: 1,
+                name: '«Прага»',
+                price: 1890
+            },
+            {
+                id: 2,
+                name: 'Медовик',
+                price: 1650
+            },
+            {
+                id: 3,
+                name: 'Красный бархат',
+                price: 2100
+            },
+            {
+                id: 4,
+                name: 'Клубничный чизкейк',
+                price: 1980
+            },
+            {
+                id: 5,
+                name: 'Наполеон',
+                price: 1750
+            },
+            {
+                id: 6,
+                name: 'Лимонный тарт',
+                price: 1820
+            },
+            {
+                id: 7,
+                name: 'Трюфельный с малиной',
+                price: 2350
+            },
+            {
+                id: 8,
+                name: 'Ванильный с ягодами',
+                price: 1900
+            }
+        ];
+
+        /* -----------------------------------------------------------------
+           РАЗДЕЛ 10.2: НАВИГАЦИЯ ПО СТРАНИЦАМ (SPA ПЕРЕКЛЮЧЕНИЕ)
+           ----------------------------------------------------------------- */
+        /**
+         * Переключает видимую секцию сайта и обновляет активный класс в меню.
+         * @param {string} id - Идентификатор секции (cakes, about, contacts)
+         * @param {HTMLElement} el - Ссылка навигации, по которой был клик
+         */
+        function showPage(id, el) {
+            // Скрываем все секции страницы
+            document.querySelectorAll('.page').forEach(p => {
+                p.classList.remove('active');
+            });
+            
+            // Отображаем выбранную секцию
+            document.getElementById(id).classList.add('active');
+            
+            // Убираем выделение со всех пунктов меню
+            document.querySelectorAll('nav a').forEach(a => {
+                a.classList.remove('active');
+            });
+            
+            // Добавляем класс активной ссылке
+            el.classList.add('active');
+        }
+
+        /* -----------------------------------------------------------------
+           РАЗДЕЛ 10.3: УПРАВЛЕНИЕ КОЛИЧЕСТВОМ ТОВАРА
+           ----------------------------------------------------------------- */
+        /**
+         * Изменяет значение в поле количества товара на +1 или -1.
+         * @param {number} id - Идентификатор торта
+         * @param {number} delta - Шаг изменения (может быть 1 или -1)
+         */
+        function changeQty(id, delta) {
+            const input = document.getElementById(`qty-${id}`);
+            let val = parseInt(input.value) + delta;
+            
+            if (val < 1) {
+                val = 1;
+            }
+            if (val > 10) {
+                val = 10;
+            }
+            
+            input.value = val;
+        }
+
+        /* -----------------------------------------------------------------
+           РАЗДЕЛ 10.4: ЛОГИКА КОРЗИНЫ
+           ----------------------------------------------------------------- */
+        // Пытаемся загрузить сохраненную корзину из памяти браузера (LocalStorage)
+        // Если её нет, создаем пустой массив
+        let cart = JSON.parse(localStorage.getItem('galinaCart')) || [];
+
+        /**
+         * Открывает и закрывает боковую панель корзины.
+         */
+        function toggleCart() {
+            document.getElementById('cartPanel').classList.toggle('active');
+            document.getElementById('cartOverlay').classList.toggle('active');
+        }
+
+        /**
+         * Добавляет выбранный торт в массив корзины.
+         * @param {number} id - ID торта
+         */
+        function addToCart(id) {
+            const cake = cakes.find(c => c.id === id);
+            const qty = parseInt(document.getElementById(`qty-${id}`).value);
+            const existing = cart.find(item => item.id === id);
+            
+            if (existing) {
+                // Если товар уже есть, просто увеличиваем его количество
+                existing.qty += qty;
+            } else {
+                // Если товара нет, добавляем новый объект
+                cart.push({
+                    ...cake,
+                    qty: qty
+                });
+            }
+            
+            saveCart();
+            renderCart();
+            showToast(`${cake.name} добавлен в корзину`);
+            
+            // Сбрасываем счетчик в карточке
+            document.getElementById(`qty-${id}`).value = 1;
+            
+            // Открываем панель, если она закрыта
+            if (!document.getElementById('cartPanel').classList.contains('active')) {
+                toggleCart();
+            }
+        }
+
+        /**
+         * Удаляет товар из корзины.
+         * @param {number} id - ID торта
+         */
+        function removeFromCart(id) {
+            cart = cart.filter(item => item.id !== id);
+            saveCart();
+            renderCart();
+            showToast('Товар удалён');
+        }
+
+        /**
+         * Сохраняет данные корзины в LocalStorage и обновляет визуальный счетчик.
+         */
+        function saveCart() {
+            localStorage.setItem('galinaCart', JSON.stringify(cart));
+            const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
+            document.getElementById('cartCount').textContent = totalItems;
+        }
+
+        /**
+         * Подсчитывает общую стоимость всех товаров в корзине.
+         * @returns {number} Итоговая сумма
+         */
+        function getTotal() {
+            return cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+        }
+
+        /**
+         * Отрисовывает товары внутри панели корзины.
+         */
+        function renderCart() {
+            const box = document.getElementById('cartItems');
+            const totalEl = document.getElementById('cartTotal');
+
+            // Если корзина пуста
+            if (cart.length === 0) {
+                box.innerHTML = '<div class="cart-empty">Здесь пока пусто...<br>Добавьте что-нибудь вкусное!</div>';
+                totalEl.textContent = '0 ₽';
+                return;
+            }
+
+            // Очищаем контейнер
+            box.innerHTML = '';
+            
+            // Пробегаемся по массиву товаров и формируем HTML
+            cart.forEach(item => {
+                const itemTotal = item.price * item.qty;
+                const div = document.createElement('div');
+                div.className = 'cart-item';
+                div.innerHTML = `
+                    <div class="cart-item-info">
+                        <h4>${item.name}</h4>
+                        <span>${item.qty} шт. × ${item.price.toLocaleString('ru-RU')} ₽ = ${itemTotal.toLocaleString('ru-RU')} ₽</span>
+                    </div>
+                    <button class="remove-item" onclick="removeFromCart(${item.id})">&times;</button>
+                `;
+                box.appendChild(div);
+            });
+            
+            // Обновляем общую сумму
+            totalEl.textContent = getTotal().toLocaleString('ru-RU') + ' ₽';
+        }
+
+        /* -----------------------------------------------------------------
+           РАЗДЕЛ 10.5: ОФОРМЛЕНИЕ ЗАКАЗА И МОДАЛЬНОЕ ОКНО
+           ----------------------------------------------------------------- */
+        /**
+         * Очищает корзину и показывает модальное окно с номером телефона.
+         */
+        function submitOrder() {
+            if (cart.length === 0) {
+                showToast('Корзина пуста. Добавьте торты!');
+                return;
+            }
+
+            // Очищаем корзину
+            cart = [];
+            saveCart();
+            renderCart();
+
+            // Закрываем панель корзины
+            toggleCart();
+
+            // Открываем модальное окно
+            document.getElementById('orderModal').classList.add('active');
+        }
+
+        /**
+         * Закрывает модальное окно.
+         */
+        function closeModal() {
+            document.getElementById('orderModal').classList.remove('active');
+        }
+
+        /* -----------------------------------------------------------------
+           РАЗДЕЛ 10.6: УВЕДОМЛЕНИЯ (TOAST)
+           ----------------------------------------------------------------- */
+        let toastTimer;
+
+        /**
+         * Показывает всплывающее уведомление в нижней части экрана.
+         * @param {string} message - Текст уведомления
+         */
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            
+            clearTimeout(toastTimer);
+            
+            toastTimer = setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        /* -----------------------------------------------------------------
+           РАЗДЕЛ 10.7: ИНИЦИАЛИЗАЦИЯ ПРИ ЗАГРУЗКЕ
+           ----------------------------------------------------------------- */
+        // При первой загрузке страницы выводим сохраненные данные
+        saveCart();
+        renderCart();
+    </script>
+</body>
+</html>
